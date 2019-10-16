@@ -115,7 +115,7 @@ let g:airline#extensions#ale#enabled = 1
 set sessionoptions-=options
 
 " colorscheme
-colorscheme dracula
+"colorscheme dracula
 
 " Add the virtualenv's site-packages to vim path
 if has('python')

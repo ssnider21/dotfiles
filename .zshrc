@@ -2,7 +2,7 @@
 #zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/rdb676/.oh-my-zsh"
+export ZSH="/Users/seansnider/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 #source ~/zshrc_extensions/spaceship_theme
@@ -26,9 +26,9 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$PYENV_ROOT/shims:$PATH"
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$PATH"
+#export PATH="$PYENV_ROOT/shims:$PATH"
 
 alias ll="colorls -la --sd --gs"
 alias awseast="export AWS_DEFAULT_REGION=us-east-1"
@@ -37,29 +37,19 @@ alias awsdev="export AWS_DEFAULT_PROFILE=GR_GG_COF_AWS_STS_Dev_Developer; export
 alias awsprod="AWS_DEFAULT_PROFILE=GR_GG_COF_AWS_STS_Prod_ReadOnly; AWS_PROFILE=GR_GG_COF_AWS_STS_Prod_ReadOnly"
 alias tokens="~/SecurityTokenScript --no-proxy"
 
-source ~/.gpconfig
 
-
-# AWS stuff
-export AWS_DEFAULT_PROFILE=GR_GG_COF_AWS_STS_Dev_Developer
-export AWS_PROFILE=GR_GG_COF_AWS_STS_Dev_Developer
-export AWS_DEFAULT_REGION=us-east-1
-
-export PATH=/usr/local/opt/openssl/bin:"$PATH"
-export PATH="/usr/local/opt/openssl/bin:$PATH"
-
-source <(inv --print-completion-script zsh)
+#source <(inv --print-completion-script zsh)
 
 # will break colorls if removed
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 source $(dirname $(gem which colorls))/tab_complete.sh
 
 # uncomment for startup stats
 # zprof
 
-function diff {
-    colordiff -u "$@"
-}
+#function diff {
+    #colordiff -u "$@"
+#}
 newtext=green
 oldtext=red
 diffstuff=cyan
