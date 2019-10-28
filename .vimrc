@@ -139,6 +139,15 @@ let NERDTreeChDirMode = 2
 map <C-o> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" add yaml stuffs
+au! BufNewFile,BufReadPost *.{yaml,yml} set foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" add python stuffs
+au! BufNewFile,BufReadPost *.py set foldmethod=indent
+
+hi Comment ctermfg=86
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
