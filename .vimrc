@@ -12,18 +12,22 @@ Plugin 'gmarik/Vundle.vim'
 " add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
 Plugin 'davidhalter/jedi-vim'
-" Plugin 'lambdalisue/vim-pyenv'
+"Plugin 'lambdalisue/vim-pyenv'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'nvie/vim-flake8'
-Plugin 'dracula/vim'
+Plugin 'dracula/vim',{ 'name': 'dracula' }
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'w0rp/ale'
-Plugin 'leafgarland/typescript-vim'
+"Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'PProvost/vim-ps1'
+"Plugin 'PProvost/vim-ps1'
+Plugin 'iamcco/markdown-preview.nvim' 
+
+" set mapping for markdown preview
+nmap md <Plug>MarkdownPreview
 
 " enable syntax highlighting
 syntax enable
@@ -114,9 +118,6 @@ let g:airline#extensions#ale#enabled = 1
 " fix for sessions
 set sessionoptions-=options
 
-" colorscheme
-"colorscheme dracula
-
 " Add the virtualenv's site-packages to vim path
 if has('python')
 py << EOF
@@ -132,12 +133,14 @@ EOF
 endif
 
 " NERDTree stuff
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup vim-jedi-custom-augroup
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 let NERDTreeQuitOnOpen = 1
 let NERDTreeChDirMode = 2
 map <C-o> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set foldmethod=indent
@@ -152,3 +155,17 @@ hi Comment ctermfg=86
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" colorscheme
+colorscheme dracula
+
+if jedi#init_python()
+  function! s:jedi_auto_force_py_version() abort
+    let g:jedi#force_py_version = pyenv#python#get_internal_major_version()
+  endfunction
+  augroup vim-pyenv-custom-augroup
+    autocmd! *
+    autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+  augroup END
+endif
